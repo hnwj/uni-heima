@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="search-box">
-			<my-search @click="gotoSearch"></my-search>
+			<mySearch @click="gotoSearch"></mySearch>
 		</view>
 		<view class="scroll-view-container">
 			<!-- 左侧的滚动视图区域 -->
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+	import mySearch from '../../components/my-search/my-search.vue'
 	export default {
 		data() {
 			return {
@@ -44,6 +45,9 @@
 				// 滚动条距离顶部的距离
 				scrollTop: 0
 			};
+		},
+		components: {
+			mySearch
 		},
 		onLoad() {
 			const sysInfo = uni.getSystemInfoSync()
