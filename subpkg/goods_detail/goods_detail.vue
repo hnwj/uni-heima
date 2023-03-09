@@ -21,7 +21,7 @@
 				</view>
 			</view>
 			<!-- 运费 -->
-			<view class="yf">快递：免运费</view>
+			<view class="yf">快递：免运费{{cart.length}}</view>
 			<!-- 商品详情信息 -->
 			<rich-text :nodes="goods_info.goods_introduce"></rich-text>
 			<!-- 商品导航组件 -->
@@ -39,6 +39,11 @@
 </template>
 
 <script>
+	import {
+		mapState,
+		mapMutations,
+		mapGetters
+	} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -68,12 +73,17 @@
 				]
 			};
 		},
+		computed: {
+			...mapState('m_cart', ['cart']),
+			...mapGetters('m_cart', ['total']),
+		},
 		onLoad(options) {
 			this.goods_id = options.goods_id
 			this.getGoodsDetail(this.goods_id)
 			console.log('options', options);
 		},
 		methods: {
+			...mapMutations('m_cart', ['addToCart']),
 			async getGoodsDetail() {
 				const {
 					data: res
@@ -103,6 +113,32 @@
 						url: '/pages/cart/cart'
 					})
 				}
+			},
+			// 添加到购物车
+			buttonClick(e) {
+				if (e.content.text === '加入购物车') {
+					// 组织商品对象
+					const goods = {
+						goods_id: this.goods_info.goods_id,
+						goods_name: this.goods_info.goods_name,
+						goods_price: this.goods_info.goods_price,
+						goods_count: 1,
+						goods_small_logo: this.goods_info.goods_small_logo,
+						goods_state: true
+					}
+					this.addToCart(goods)
+				}
+			}
+		},
+		watch: {
+			total: {
+				handler(newVal) {
+					const findResult = this.options.find((x) => x.text === '购物车')
+					if (findResult) {
+						findResult.info = newVal
+					}
+				},
+				immediate: true
 			}
 		}
 	}
