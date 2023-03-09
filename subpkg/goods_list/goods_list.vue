@@ -11,19 +11,6 @@
 	export default {
 		data() {
 			return {
-<<<<<<< HEAD
-				// 请求对象
-				queryObj: {
-					// 查询关键词
-					query: '',
-					// 商品分类id
-					cid: '',
-					// 页码值
-					pagenum: 1,
-					// 每页显示多少条数据
-					pagesize: 10
-				}
-=======
 				// 请求参数对象
 				queryObj: {
 					query: '', // 查询关键词
@@ -37,14 +24,11 @@
 				total: 0,
 				// 是否正在请求数据
 				isloading: false,
->>>>>>> goodslist
 			};
 		},
 		onLoad(options) {
 			this.queryObj.query = options.query || ''
-<<<<<<< HEAD
 			console.log(options);
-=======
 			this.queryObj.cid = options.cid || ''
 			this.getGoodsList()
 		},
@@ -89,7 +73,6 @@
 			this.goodsList = []
 			// 2. 重新发起请求
 			this.getGoodsList(() => uni.stopPullDownRefresh())
->>>>>>> goodslist
 		}
 	}
 </script>
